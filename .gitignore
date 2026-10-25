@@ -1,0 +1,10 @@
+# Temporários de build e binário gerado
+/build/
+/output/
+
+# Configuração local
+*.ini
+
+# OpenCode
+session-*.md
+__pycache__/
