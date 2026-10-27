@@ -3,7 +3,7 @@
 Visualizador de espectro da saída padrão do Windows, port nativo do
 [`graph-eq`](../graph-eq) Android para **C++17 + Win32 + GDI + WASAPI loopback**.
 
-Versão atual: **1.0.0**.
+Versão atual: **1.1.0**.
 
 <img src="icon128x128.png" alt="Ícone do Graphic EQ" width="96">
 

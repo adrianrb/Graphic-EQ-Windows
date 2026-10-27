@@ -2,7 +2,7 @@
 
 ## Current state
 
-- Native Windows port of `../graph-eq` at **v1.0.0**: C++17 + Win32 + GDI + WASAPI
+- Native Windows port of `../graph-eq` at **v1.1.0**: C++17 + Win32 + GDI + WASAPI
   loopback, cross-compiled with MinGW-w64 to one portable `.exe`.
 - This is a **visualizer, not an audio-processing equalizer**. It only reads the default
   output via WASAPI loopback and must never modify or render audio.
