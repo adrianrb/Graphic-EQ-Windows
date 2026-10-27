@@ -7,6 +7,24 @@ Versão atual: **1.1.0**.
 
 <img src="icon128x128.png" alt="Ícone do Graphic EQ" width="96">
 
+## Telas
+
+**Painel principal** — espectro da saída padrão, 15 bandas e pico:
+
+<img src="docs/screenshots/main-window.png" alt="Painel principal do Graphic EQ" width="720">
+
+**Opções** — análise, aparência e comportamento:
+
+<img src="docs/screenshots/options.png" alt="Janela de opções do Graphic EQ" width="520">
+
+**Menu de contexto** — o mesmo menu abre pelo ícone da bandeja:
+
+<img src="docs/screenshots/context-menu.png" alt="Menu de contexto do Graphic EQ" width="720">
+
+**Sobre** — versão e informações do projeto:
+
+<img src="docs/screenshots/about.png" alt="Diálogo Sobre do Graphic EQ" width="400">
+
 ## O que faz
 
 - Analisa o áudio que está tocando no dispositivo de saída padrão (loopback),
@@ -87,6 +105,7 @@ src/ui/                   janela principal, opções, menu e bandeja
 src/res/                  ícone, metadados e IDs de recurso
 tests/dsp_test.cpp        teste de host (FFT/bandas/escala)
 tools/make_icon.py        gerador do ícone
+docs/screenshots/         capturas de tela usadas no README
 ```
 
 ## Configuração
