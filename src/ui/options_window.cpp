@@ -101,7 +101,7 @@ void CreateControls(HWND h) {
     HWND opacity = mk(TRACKBAR_CLASSW, L"",
                       TBS_HORZ | TBS_AUTOTICKS, 12, 250, 488, 32,
                       IDC_SLIDER_OPACITY);
-    SendMessageW(opacity, TBM_SETRANGE, TRUE, MAKELPARAM(10, 100));
+    SendMessageW(opacity, TBM_SETRANGE, TRUE, MAKELPARAM(0, 100));
     SendMessageW(opacity, TBM_SETTICFREQ, 10, 0);
 
     mk(L"BUTTON", L"Tema sem\u00e1foro (verde/amarelo/laranja/vermelho)",
@@ -313,7 +313,7 @@ LRESULT CALLBACK OptionsProc(HWND h, UINT msg, WPARAM wParam, LPARAM lParam) {
                      gState.width);
             break;
         case IDC_SLIDER_OPACITY:
-            gState.opacity = std::clamp(pos, 10, 100);
+            gState.opacity = std::clamp(pos, 0, 100);
             SetLabel(h, IDC_LBL_OPACITY, L"Opacidade do painel: %d%%",
                      gState.opacity);
             RequestRepaint();

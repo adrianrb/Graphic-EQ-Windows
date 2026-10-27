@@ -337,6 +337,11 @@ void DrawPanel(HDC hdc, int width, int height) {
     }
     EnsurePalette(segments);
 
+    // Os LEDs são preenchidos apenas com o brush; sem isso a caneta padrão do
+    // DC desenha um contorno preto que vira alpha 1 e deixa o desktop aparecer
+    // mesmo com a opacidade do painel em 100%.
+    SelectObject(hdc, GetStockObject(NULL_PEN));
+
     SelectObject(hdc, gLabelFont);
     SetTextColor(hdc, kTextLabel);
 
@@ -383,11 +388,12 @@ void DrawPanel(HDC hdc, int width, int height) {
         }
     }
 
+    SelectObject(hdc, oldPen);
     SelectObject(hdc, oldFont);
 }
 
 void RenderLayered() {
-    if (!gMain || gState.opacity <= 0) {
+    if (!gMain) {
         return;
     }
 
@@ -406,9 +412,10 @@ void RenderLayered() {
     GdiFlush();
 
     // O GDI desenha sem alpha. O fundo do painel é convertido para a opacidade
-    // escolhida; LEDs, texto e borda ficam opacos.
+    // escolhida (0 = totalmente transparente, 100 = totalmente opaco); LEDs,
+    // texto e borda ficam sempre opacos.
     const BYTE panelAlpha = static_cast<BYTE>(std::clamp(
-        255 * gState.opacity / 100, 1, 255));
+        255 * gState.opacity / 100, 0, 255));
     auto* pixels = static_cast<DWORD*>(gDibBits);
     const int total = width * height;
     for (int i = 0; i < total; ++i) {
@@ -417,7 +424,9 @@ void RenderLayered() {
         if (rgb == kPanelRgb) {
             alpha = panelAlpha;
         } else if (rgb == 0) {
-            alpha = 1;   // cantos arredondados: quase invisíveis, mas clicáveis
+            // Cantos arredondados: em 0% somem por completo; acima disso ficam
+            // com alpha 1 para manter a área arrastável.
+            alpha = panelAlpha == 0 ? 0 : 1;
         }
         const BYTE r = static_cast<BYTE>((pixels[i] >> 16) & 0xFF);
         const BYTE g = static_cast<BYTE>((pixels[i] >> 8) & 0xFF);

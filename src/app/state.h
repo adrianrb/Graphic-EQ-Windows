@@ -7,7 +7,7 @@
 struct AppState {
     int bands = 15;                    // 3..19
     int sensitivity = 50;              // 0..100 -> ganho 0,45..1,55
-    int opacity = 85;                  // 10..100 (% do fundo do painel)
+    int opacity = 85;                  // 0..100 (% do fundo do painel)
     int width = 520;                   // largura do cliente em pixels
     COLORREF color = RGB(0, 229, 255); // cor base dos LEDs
     bool traffic = false;              // tema verde/amarelo/laranja/vermelho

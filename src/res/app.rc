@@ -4,8 +4,8 @@
 IDI_APP ICON "app.ico"
 
 1 VERSIONINFO
-FILEVERSION 0,0,0,0
-PRODUCTVERSION 0,0,0,0
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
 FILEOS 0x40004L
 FILETYPE 0x1L
 BEGIN
@@ -15,11 +15,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "adrian.barbosa@gmail.com"
             VALUE "FileDescription", "Graphic EQ - Visualizador de espectro"
-            VALUE "FileVersion", "0.0.0"
+            VALUE "FileVersion", "1.0.0"
             VALUE "InternalName", "GraphicEQ"
             VALUE "OriginalFilename", "GraphicEQ.exe"
             VALUE "ProductName", "Graphic EQ"
-            VALUE "ProductVersion", "0.0.0"
+            VALUE "ProductVersion", "1.0.0"
         END
     END
     BLOCK "VarFileInfo"

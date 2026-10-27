@@ -2,7 +2,7 @@
 
 ## Current state
 
-- Native Windows port of `../graph-eq` at **v0.0.0**: C++17 + Win32 + GDI + WASAPI
+- Native Windows port of `../graph-eq` at **v1.0.0**: C++17 + Win32 + GDI + WASAPI
   loopback, cross-compiled with MinGW-w64 to one portable `.exe`.
 - This is a **visualizer, not an audio-processing equalizer**. It only reads the default
   output via WASAPI loopback and must never modify or render audio.
@@ -14,7 +14,8 @@
 ## Build and verify
 
 ```sh
-make                 # compila -> output/GraphicEQ.exe
+make release         # release -> output/GraphicEQ.exe (-O2 -DNDEBUG, -s)
+make                 # alias para release
 make test            # compila e roda o teste de DSP no host (g++)
 make clean           # apaga build/ e output/
 ```
@@ -87,10 +88,13 @@ tools/make_icon.py               gerador do ícone (Pillow; não faz parte do bu
   e é entregue por `UpdateLayeredWindow` com alpha pré-multiplicado.
 - O alpha do fundo do painel é feito por igualdade exata com `kPanelRgb`
   (`RgbDword(kPanelColor)`, `RGB(6,20,25)`) em `src/gfx/render.cpp`: pixels dessa
-  cor recebem a opacidade escolhida, LEDs/texto/borda ficam opacos e os cantos pretos
-  ficam com alpha 1. Lembre que o DIB guarda `0x00RRGGBB` e `COLORREF` guarda
+  cor recebem a opacidade escolhida (0..100), LEDs/texto/borda ficam opacos e os cantos
+  pretos ficam com alpha 1. Lembre que o DIB guarda `0x00RRGGBB` e `COLORREF` guarda
   `0x00BBGGRR`; não compare `pixels[i]` com `kPanelColor` diretamente. Se mudar a cor
   do painel ou usar essa cor em conteúdo, atualize a pós-produção de alpha.
+- LEDs e pico precisam ser desenhados com `NULL_PEN`; a caneta padrão do DC deixa um
+  contorno preto de 1 px (alpha 1) que vira furo transparente mesmo com opacidade 100%.
+  Em opacidade 0 o fundo e os cantos pretos usam alpha 0; só conteúdo fica visível.
 - `WM_ERASEBKGND` retorna 1; use `InvalidateRect` e redesenhe o DIB inteiro. Não pinte
   apenas regiões, ou o layered surface fica inconsistente.
 - Arrastar é manual (cliente inteiro); não há barra de título. Duplo clique abre opções,
@@ -99,8 +103,8 @@ tools/make_icon.py               gerador do ícone (Pillow; não faz parte do bu
 ## Versioning and git
 
 - `version.txt` é a fonte da verdade (`X.Y.Z`). `src/app/version.h` (`APP_VERSION`) e
-  `src/res/app.rc` (`FILEVERSION`/`ProductVersion`) devem ser bumpados juntos; o Makefile
-  falha se os três divergirem.
+  `src/res/app.rc` (`FILEVERSION`, `PRODUCTVERSION`, `FileVersion`, `ProductVersion`)
+  devem ser bumpados juntos; o Makefile falha se divergirem.
 - Não commite `build/`, `output/`, binários gerados, `GraphicEQ.ini` ou capturas locais.
 - O checkout usa `core.filemode=false` e `ignorecase=true` por estar em DrvFs.
 

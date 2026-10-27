@@ -62,7 +62,7 @@ void LoadIni() {
     gState.opacity = std::clamp(
         static_cast<int>(GetPrivateProfileIntW(
             SECTION, L"Opacity", gState.opacity, gIniPath.c_str())),
-        10, 100);
+        0, 100);
     gState.color = static_cast<COLORREF>(
         GetPrivateProfileIntW(SECTION, L"Color",
                               static_cast<int>(gState.color),
